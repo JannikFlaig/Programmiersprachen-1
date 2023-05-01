@@ -1,0 +1,72 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+#bigbox {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid yellow;
+}
+
+#list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin-top: 10px;
+    padding: 0;
+}
+
+#list li {
+    display: inline;
+    width: max-content;
+    margin-bottom: 10px;
+    background-color: #F2F2F2;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid green;
+}
+
+#button, #item {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+#button {
+    background-color: #4CAF50;
+    color: white;
+    margin-left: 10px;
+}
+#button:hover {
+    cursor:pointer;
+}
+
+#lehr {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid red;
+}
+#lehr input {   
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid green;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
+    margin-top: 22px;
+    margin-bottom: 9px;
+}
+#lehr:before {
+    content: "\2713";
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    line-height: 20px;
+    transition: opacity 0.2s ease-out;
+    opacity: 0;
+  }
+#container{
+    display: flex;
+    
+}
