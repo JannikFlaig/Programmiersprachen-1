@@ -1,9 +1,7 @@
-let res = 0;
-let ges = 0;
-
 function calculate() {
     let select = document.getElementById("select").value;
     let n = document.getElementById("n").value;
+    let ges = 0;
 
     if(select == 1) {
         series1 = document.createTextNode("Fn = n * n; F1 = 1");
@@ -27,8 +25,7 @@ function calculate() {
         document.getElementById("outcome").appendChild(br);
     }
 
-    console.log("select:", select);
-    console.log("n:", n);
+
     if(select == 1) {
         for(let i = 1; i <= n; i++) {
             ges = i * i;
