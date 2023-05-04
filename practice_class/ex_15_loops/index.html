@@ -5,16 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="1.js"></script>
+    <link rel="stylesheet" href="loops.css">
     <title>Ex_15</title>
 </head>
 <body>
-    select your series
-    <input type="text" placeholder="Number from 1 to 4" id="select">
+    <h3>select a series</h3>
+    <select id="select">
+        <option value="1">Fn = n * n</option>
+        <option value="2">Fn = Fn-1 * 2</option>
+        <option value="3">Fn = Fn-1 + Fn-2</option>
+        <option value="4">Fn = nth prime number</option>
+    </select>
     <br>
-    enter n 
+    <h3>enter a value for n</h3> 
     <input type="text" placeholder="n" id="n">
     <button onclick="calculate()">Submit!</button>
     <div id="outcome">
+        <h2>Outcome</h2>
         
     </div>
 </body>
