@@ -1,36 +1,58 @@
 //let player select difficulty(depending on that creat the correct amount of cards)
-let amountOfCards;
 let clickCounter = 0;
 let CardID  = [];
-let player = 1;
-let scoreP1 = 0;
-let scoreP2 = 0;
+let highScore = [];
 
+//multiplayer-mode
+let players = [];
+let currentPlayer = 1;
+
+
+function submitPLayer(){
+    let amountPlayer = document.getElementById("input").value;
+    multiplayer(amountPlayer);
+}
+
+function multiplayer(amountPlayer) {
+    for(let i = 1; i <= amountPlayer; i++){
+        players.push({
+            players: i,
+			score: 0
+        });
+		score = document.createElement("div");
+		score.id = "p" + i;
+		text = document.createTextNode("Player" + i);
+		score.appendChild(text);
+		scorebox = document.getElementById("score");
+		scorebox.appendChild(score);
+    }
+    console.table(players);
+}
 
 
 function checkDifficulty(event) {
-    let clickedButton = event.target;
-    let buttonID = clickedButton.id;
-    if(buttonID == 1) {
+    let amountOfCards;
+    let clickedButton = event.target.id;
+    if(clickedButton == 1) {
         amountOfCards = 30;
-    } else if(buttonID == 2) {
+    } else if(clickedButton == 2) {
         amountOfCards = 40;
-    } else if(buttonID == 3) {
+    } else if(clickedButton == 3) {
         amountOfCards = 50;
-    } else if(buttonID == 4) {
+    } else if(clickedButton == 4) {
         amountOfCards = 70;
     }
     let buttons = document.querySelectorAll(".difficulty");
     buttons.forEach(function(buttons) {
         buttons.style.display = "none";
     })
-    setup();
+    createCards(amountOfCards);
 }
 
 
 
-function setup() {
-    let cache = [];
+function createCards(amountOfCards) {
+    let IDs = [];
     let counter = 0;
     let idVar = 1;
     for(let i = 0; i < amountOfCards; i++) {
@@ -39,21 +61,21 @@ function setup() {
             idVar ++;
             counter = 0;
         }
-       cache.push({
+       IDs.push({
         id: idVar,
-        text: "card" +idVar
+        text:idVar
        });
        counter ++;
-
     }
-    console.table(cache);
-    shuffleIDs(cache)
+
+    console.table(IDs);
+    shuffleIDs(IDs)
     for(let i = 0; i < amountOfCards; i++) {
        //creating the correct amount of playing cards, based on the entered difficulty(amountOfCards)
         card = document.createElement("div");
-        card.id = cache[i].id;  
+        card.id = IDs[i].id;  
         card.classList.add("front");
-        text = document.createTextNode(cache[i].text);
+        text = document.createTextNode(IDs[i].text);
 
         card.appendChild(text);
 
@@ -72,8 +94,6 @@ function shuffleIDs(arr) {
     }
     return arr;
 }
-
-
 
 function cardClicked(event) {
     clickedCard = event.target;
@@ -95,43 +115,40 @@ function cardClicked(event) {
 
 
 function checkPair() {
-    let id1 = CardID[0];
-    let id2 = CardID[1];
-    console.log("player:",player);
+	let id1 = CardID[0];
+	let id2 = CardID[1];
+	console.log(currentPlayer);
+  
+	let outputScore = document.getElementById("p" + currentPlayer);
+    
 
-
-    if(id1 === id2) {
-    //cards are matching
-        alert("pair"); 
-        console.table("davor:",CardID);
-        removeCards();
-        if(player === 1) {
-            scoreP1 ++;
-        } else {
-            scoreP2 ++;
-        }
-    } else {
-    //cards are not matching
-        alert("no pair");
-        let turnedCard = document.querySelectorAll(".back")   
-        turnedCard.forEach(function(card) {
-            card.classList.remove("back");
-        }) 
-        if(player === 1) {
-            player = 2;
-        } else {
-            player = 1;
-        }
-    }
-    console.table("davor:",CardID);
-    CardID = [];
-    console.table("danach:",CardID);
-    clickCounter = 0;
-}
+	if (id1 === id2) {
+	  // Karten passen zusammen
+	  removeCards();
+  
+	  // Zug und Score für den aktuellen Spieler aktualisieren
+	  players[currentPlayer - 1].score++;
+	  outputScore.innerHTML  = players[currentPlayer - 1].score;
+  
+	} else {
+	  // Karten passen nicht zusammen
+	    let turnedCard = document.querySelectorAll(".back");
+	    turnedCard.forEach(function (card) {
+	        card.classList.remove("back");
+	    });
+	  // Den nächsten Spieler auswählen
+        currentPlayer = (currentPlayer % players.length) + 1;
+	}
+    console.table(players);
+	CardID = [];
+	clickCounter = 0;
+  }
+  
 
 
 
 function removeCards() {
+    //later maybe only change location on the board 
     let cardsToRemove = document.querySelectorAll(".back");
     cardsToRemove.forEach( function(card){
         card.parentNode.removeChild(card);
@@ -151,10 +168,16 @@ function removeCards() {
 
 
 
-
+function gameEnd() {
+    highScore.push({
+        //score of the winner
+    });
+}
 
 
 
 function restart() {
     
 }
+
+
