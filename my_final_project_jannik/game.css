@@ -1,6 +1,19 @@
 body {
     padding: 30px;
 }
+#inputbox {
+    display:flex;
+}
+
+#score {
+    /* border: 1px solid aqua;  */
+    margin-left: 37.5%;
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+    max-width: 25%;
+}
+
 #board {
     margin-top: 10%;
     display: flex;
@@ -15,6 +28,7 @@ body {
     column-gap: 60px;
 }
 .difficulty, #restart {
+    display: flex;
     background-color: #4287f5;
     color: #fff; 
     border: none;
@@ -23,33 +37,37 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
+}
   
-  .difficulty:hover, #restart:hover {
+.difficulty:hover, #restart:hover {
     background-color: #1e4dff;
-  }
+}
   
-#score {
-    border: 1px solid aqua; 
-    margin-left: 37.5%;
-    display: flex;
-    justify-content: center;
-    justify-content: space-around;
-    max-width: 25%;
-    
-}  
 
-
-.front {
+.card {
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 30px;
-    border: 2px solid green;
     width: 50px;
     height: 50px;
-    background-color:blue;   
+
+/* Bild für rückseite */
 }
-.back {
-    background-color: red;
+.back-img {
+    background-image: url(picture1.png) !important;
 }
+.flip {
+    transition: transform 0.3s ease;
+    transform-style: preserve-3d;
+  }
+  
+  .flip.card {
+    transform: perspective(600px) rotateY(0deg);
+  }
+  
+  .flip.back {
+    transform: perspective(600px) rotateY(180deg);
+  }
+
+  

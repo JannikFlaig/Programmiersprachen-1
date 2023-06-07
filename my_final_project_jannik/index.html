@@ -7,18 +7,20 @@
     <title>Memory</title>
 </head>
 <body>
-    <div id="buttons">
-        <button class="difficulty" id="1" onclick="checkDifficulty(event)">15 pairs</button>
-        <button class="difficulty" id="2" onclick="checkDifficulty(event)">20 pairs</button>
-        <button class="difficulty" id="3" onclick="checkDifficulty(event)">25 pairs</button>
-        <button class="difficulty" id="4" onclick="checkDifficulty(event)">35 pairs</button>
+    <div id="inputbox">  
+        <input type="number" id="input" placeholder="Player">
+        <button id="submit" onclick="submitPLayer()">Submit!</button>
+    </div> 
+
+    <div id="buttons"> 
+        <button class="difficulty" id="30" onclick="checkDifficulty(event)">15 pairs</button>
+        <button class="difficulty" id="40" onclick="checkDifficulty(event)">20 pairs</button>
+        <button class="difficulty" id="50" onclick="checkDifficulty(event)">25 pairs</button>
+        <button class="difficulty" id="70" onclick="checkDifficulty(event)">35 pairs</button>
     </div>
     
-    <div id="score">
+    <div id="score"></div>
 
-    </div>
-    <input type="number" id="input">
-    <button id="submit" onclick="submitPLayer()">Submit!</button>
 
     <div id="board">
         <div id="mainBoard"></div>
