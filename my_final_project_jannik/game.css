@@ -55,7 +55,7 @@ body {
 /* Bild für rückseite */
 }
 .back-img {
-    background-image: url(picture1.png) !important;
+    background-image: url(./Images/back.svg) !important;
 }
 .flip {
     transition: transform 0.3s ease;

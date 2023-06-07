@@ -75,7 +75,7 @@ function createCards(amountOfCards) {
         card.data = dataSet[i].data;  
         
         
-        card.style.backgroundImage = `url(Frognight.jpeg)`;
+        card.style.backgroundImage = `url(./Images/9.jpeg)`;
         // picture${dataSet[i].data}.png
 
         card.classList.add("card");
@@ -192,7 +192,6 @@ function updateTimer() {
     let seconds = Math.floor((semiFinalTime % 60000) / 1000);
 
     let timerOutput = document.getElementById("timer");
-    timerOutput.style.color = "blue";
     timerOutput.textContent = pad(minutes) + ":" + pad(seconds);
 }
 
