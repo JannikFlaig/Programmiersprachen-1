@@ -7,7 +7,7 @@ let highScore = [];
 let players = [];
 let currentPlayer = 1;
 
-let startTime, endTime;
+let startTime, endTime = 0;
 
 
 function submitPLayer(){
@@ -67,16 +67,19 @@ function createCards(amountOfCards) {
        counter ++;
     }
 
-    console.table(dataSet);
     shuffleData(dataSet)
+    console.table(dataSet);
     for(let i = 0; i < amountOfCards; i++) {
        //creating the correct amount of playing cards, based on the entered difficulty(amountOfCards)
+        cardsParent = document.createElement("div");
+        cardsParent.classList.add("card");
+
         card = document.createElement("div");
         card.data = dataSet[i].data;  
         
         
-        card.style.backgroundImage = `url(./Images/9.jpeg)`;
-        // picture${dataSet[i].data}.png
+        // card.style.backgroundImage = `url(./Images/9.jpeg)`;
+        card.style.backgroundImage = `url(./Images/${dataSet[i].data}.jpeg)`;
 
         card.classList.add("card");
         card.classList.add("back-img");
@@ -89,7 +92,8 @@ function createCards(amountOfCards) {
             cardClicked(event);
         });
 
-        document.getElementById("mainBoard").appendChild(card);
+        cardsParent.appendChild(card);
+        document.getElementById("mainBoard").appendChild(cardsParent);
     }
 }
 function shuffleData(arr) {
@@ -124,7 +128,7 @@ function cardClicked(event) {
     //counter +1, when counter 2: function "checkPair()" and block the programm from clicking mor cards
 }
 
-
+let tempcount = 0;
 
 function checkPair() {
 	let data1 = CardData[0];
@@ -141,14 +145,19 @@ function checkPair() {
 	  // Zug und Score für den aktuellen Spieler aktualisieren
 	  players[currentPlayer - 1].score++;
 	  outputScore.innerHTML  = players[currentPlayer - 1].score;
-      removeCards();
+
+      getDestination();
+
 	} else {
         console.log("no pair");
 	  // Karten passen nicht zusammen
 	    let turnedCard = document.querySelectorAll(".back");
-	    turnedCard.forEach(function (card) {
-	        card.classList.remove("back");
-            card.classList.add("back-img");
+
+	    turnedCard.forEach(function (card) {        
+            if(!card.classList.contains("solved")){
+                card.classList.remove("back");
+                card.classList.add("back-img");
+            }
 	    });
 	  // Den nächsten Spieler auswählen
         currentPlayer = (currentPlayer % players.length) + 1;
@@ -160,16 +169,31 @@ function checkPair() {
   }
   
 
-
-
-function removeCards() {
-    //later maybe only change location on the board 
-    //placeholder(cards stay in place)
-    let cardsToRemove = document.querySelectorAll(".back");
-    cardsToRemove.forEach( function(card){
-        card.style.visibility = "hidden";
-    });
+function getDestination(){
+    let placeholderForVarName2 = document.getElementById("p" + currentPlayer).getBoundingClientRect();
+    destination = {x:placeholderForVarName2.left, y:placeholderForVarName2.top}
+    startAnimate(destination);
+}
+function startAnimate(destination) {
+    let child = document.querySelectorAll(".back");
+    
+    child.forEach((child)=>{
+        if(!child.classList.contains("solved")){
+            child.classList.add("solved");
+            let rect = child.getBoundingClientRect();
+            let moveInX = destination.x - rect.left;
+            let moveInY = destination.y - rect.top;
+                
+            child.style.cssText += `transform: translateX(${moveInX}px) translateY(${moveInY}px) scale(0.5);`
+        }
+    })
+    setTimeout(()=>{reset(child)}, 2000);
     checkGameEnd();
+}
+function reset(child) {
+    child.forEach((child)=> {
+        child.style.transition = "0s";
+    });
 }
 
 
@@ -183,21 +207,25 @@ function endTimer() {
     clearInterval(timerInterval);
     let finalTime = endTime - startTime;
     console.log(finalTime);
+    startTime = undefined;
 }
 
 function updateTimer() {
+    document.getElementById("timer").style.display = "block";
     let currentTime = Date.now();
     let semiFinalTime = currentTime - startTime;
     let minutes = Math.floor(semiFinalTime / 60000);
     let seconds = Math.floor((semiFinalTime % 60000) / 1000);
 
     let timerOutput = document.getElementById("timer");
-    timerOutput.textContent = pad(minutes) + ":" + pad(seconds);
+    timerOutput.innerHTML = pad(minutes) + ":" + pad(seconds);
 }
 
 function pad(num) {
     return num.toString().padStart(2, '0');
 }
+
+
 
 
 
@@ -237,8 +265,10 @@ function restart() {
     clickCounter = 0;
     CardID  = [];
     players = [];
+    dataSet = [];
     currentPlayer = 1;
-
+    // updateTimer();
+    console.table(dataSet);
     //deleting all cards and the scores
     let cards = document.querySelectorAll(".card");
     cards.forEach(function(card){
@@ -250,14 +280,15 @@ function restart() {
     });
 
 
-
+    endTimer();
+    document.getElementById("timer").style.display = "none";
 
 
     let buttons = document.querySelectorAll(".difficulty");
     buttons.forEach(function(buttons) {
         buttons.style.display = "flex";
     })
-    placeholderForVarName1 = document.getElementById("inputbox").style.display = "flex";
+    document.getElementById("inputbox").style.display = "flex";
     input = document.getElementById("input").value = "";
 
     console.log("restart");
