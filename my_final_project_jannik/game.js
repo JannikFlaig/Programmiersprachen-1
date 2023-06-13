@@ -55,6 +55,8 @@ function createCards(amountOfCards) {
 
     let counter = 0;
     let dataVar = 1;
+    let childID = 0;
+    let parentID = 0;
     for(let i = 1; i <= amountOfCards; i++) {
         if(counter == 2) {
             dataVar ++;
@@ -62,31 +64,40 @@ function createCards(amountOfCards) {
         }
         dataSet.push({
         data: dataVar,
-        text:dataVar
+        text: dataVar,
+        childID: childID,
+        parentID: parentID,
        });
        counter ++;
+       childID++;
+       parentID++;
     }
 
-    shuffleData(dataSet)
+    shuffleData(dataSet);
     console.table(dataSet);
-    for(let i = 0; i < amountOfCards; i++) {
+
+    for(let i = 0; i < amountOfCards; i++) {   
+         setTimeout(()=>{
        //creating the correct amount of playing cards, based on the entered difficulty(amountOfCards)
         cardsParent = document.createElement("div");
         cardsParent.classList.add("card");
+        cardsParent.id = "parent" + dataSet[i].parentID;
+
 
         card = document.createElement("div");
         card.data = dataSet[i].data;  
+        card.id = "child" + dataSet[i].childID;
         
+
         
-        // card.style.backgroundImage = `url(./Images/9.jpeg)`;
-        card.style.backgroundImage = `url(./Images/${dataSet[i].data}.jpeg)`;
+        card.style.backgroundImage = `url(./Images/${dataSet[i].data}.svg)`;
 
         card.classList.add("card");
         card.classList.add("back-img");
-        text = document.createTextNode(dataSet[i].text);
+        // text = document.createTextNode(dataSet[i].text);
         
 
-        card.appendChild(text);
+        // card.appendChild(text);
 
         card.addEventListener("click", function(){
             cardClicked(event);
@@ -94,8 +105,54 @@ function createCards(amountOfCards) {
 
         cardsParent.appendChild(card);
         document.getElementById("mainBoard").appendChild(cardsParent);
+        // Animation();       
+        let startPos = document.getElementById("start").getBoundingClientRect();
+        let endPos = document.getElementById("parent" + dataSet[i].parentID).getBoundingClientRect();
+        let child = document.getElementById("child" + dataSet[i].childID);
+    
+    
+        child.style.top = startPos.top - endPos.top + 'px'; // Ändere die Berechnung der top-Position
+        child.style.left = startPos.left - endPos.left + 'px'; // Ändere die Berechnung der left-Position
+    
+        setTimeout(()=>{
+            child.style.top = '0'; // Setze die top-Position auf 0
+            child.style.left = '0'; // Setze die left-Position auf 0
+        },0);  
+      },200 * i);
+      //animation in seperaten for loop
     }
 }
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function shuffleData(arr) {
 //shuffles the data and content of the cards
     for (let i = arr.length - 1; i > 0; i--) {
@@ -108,6 +165,7 @@ function shuffleData(arr) {
 function cardClicked(event) {
     
     clickedCard = event.target;
+    console.log("clickedCard.id:",clickedCard.id);
 
     if(clickCounter < 2 && !clickedCard.classList.contains("back")){
         clickedCard.classList.add("back", "flip");
@@ -169,6 +227,9 @@ function checkPair() {
   }
   
 
+
+
+
 function getDestination(){
     let placeholderForVarName2 = document.getElementById("p" + currentPlayer).getBoundingClientRect();
     destination = {x:placeholderForVarName2.left, y:placeholderForVarName2.top}
@@ -187,7 +248,7 @@ function startAnimate(destination) {
             child.style.cssText += `transform: translateX(${moveInX}px) translateY(${moveInY}px) scale(0.5);`
         }
     })
-    setTimeout(()=>{reset(child)}, 2000);
+    // setTimeout(()=>{reset(child)}, 2000);
     checkGameEnd();
 }
 function reset(child) {
@@ -235,7 +296,7 @@ function checkGameEnd() {
         console.log(players[i].score);
         totalScore += players[i].score;
     }
-    console.log(typeof players[1].score)
+    // console.log(typeof players[1].score)
     console.log("totalscore",totalScore);
     console.log("playerlength",players.length);
     console.log("datasetlength.",dataSet.length);
