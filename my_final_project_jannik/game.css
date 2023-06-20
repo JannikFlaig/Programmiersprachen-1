@@ -15,6 +15,7 @@ body {
     justify-content: center;
     justify-content: space-around;
     max-width: 25%;
+    font-size: 30px;
 }
 
 #board {
@@ -24,26 +25,49 @@ body {
 }
 
 #mainBoard {
-    max-width: fit-content;
+    padding-right: 55px;
+    width: fit-content;
+    height: fit-content;
     display: grid;
-    grid-template-columns: repeat(5,20px);
-    row-gap: 30px;
-    column-gap: 60px;
+    /* border: 1px solid pink; */
+    row-gap: 20px;
+    column-gap: 80px;
+    justify-content: center;
+    /* max-width: 60vw; */
 }
-.difficulty, #restart {
-    display: flex;
-    background-color: #4287f5;
+.difficulty, #restart, #mute, #scoreList {
+    background-color: rgba(83, 19, 1, 1);
     color: #fff; 
     border: none;
+    display:none;
     border-radius: 5px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
+#mute {
+    position: absolute;
+    top: 4.5%;
+    left: 40%;
+}
+#scoreList{
+    position:absolute;
+    top: 4.5%;
+    left: 55%;
+}
   
-.difficulty:hover, #restart:hover {
+.difficulty:hover,#mute:hover, #scoreList:hover, #restart:hover {
     background-color: #1e4dff;
+}
+
+#buttons {
+    margin-left:  30%;
+    margin-right: 30%;
+    /* border: 1px solid green;  */
+    display: flex;
+    justify-content: space-around;
 }
   
 
@@ -53,8 +77,9 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 30px;
-    width: 50px;
-    height: 50px;
+    /* border: 1px solid red; */
+    width:  75px;
+    height: 75px;
     transition: all 0.5s ease;
 }
 .back-img {
@@ -73,4 +98,36 @@ body {
     transform: perspective(600px) rotateY(180deg);
   }
 
-  
+
+  #timer {
+    padding-left:  8px;
+    padding-right: 8px;
+    position: absolute;
+    border: 2px solid black;
+    display: none;
+    /* border: 2px solid white; */
+    border-radius: 45px;
+    font-size: 30px;
+  }
+  .deleteScore {
+    font-size: 30px;
+  }
+
+  .highscores-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.highscores-table td {
+    /* border: 1px solid red; */
+    padding: 8px;
+}
+
+#scoreBoard {
+    z-index:1;
+    background-color: grey;
+    width: 500px;
+    /* border: 1px solid blue; */
+    left: 65%;
+    position: absolute;
+}
