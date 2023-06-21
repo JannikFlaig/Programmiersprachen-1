@@ -131,3 +131,6 @@ body {
     left: 65%;
     position: absolute;
 }
+#score{
+    position: absolute;
+}

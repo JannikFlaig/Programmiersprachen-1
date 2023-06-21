@@ -228,6 +228,7 @@ function checkPair() {
 
   setTimeout(function () {
     if (data1 === data2) {
+      document.getElementById("cardMatch").play();
       // Karten passen zusammen
       console.log("pair");
       // Zug und Score für den aktuellen Spieler aktualisieren
@@ -258,7 +259,16 @@ function checkPair() {
   }, 1000);
 }
 
-
+function sound() {
+if(mute === false){
+  mute = true;
+  document.getElementById("mute").style.backgroundImage = ""//crossed out speaker
+} else {
+  mute = false;
+  document.getElementById("mute").style.backgroundImage = ""//default speaker
+}
+ console.log(mute); 
+}
 
 
 
