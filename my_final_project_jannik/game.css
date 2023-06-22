@@ -78,8 +78,8 @@ body {
     justify-content: center;
     font-size: 30px;
     /* border: 1px solid red; */
-    width:  75px;
-    height: 75px;
+    height: 50px;
+    width:  50px;
     transition: all 0.5s ease;
 }
 .back-img {
@@ -124,7 +124,7 @@ body {
 }
 
 #scoreBoard {
-    z-index:1;
+    z-index:3;
     background-color: grey;
     width: 500px;
     /* border: 1px solid blue; */
@@ -133,4 +133,99 @@ body {
 }
 #score{
     position: absolute;
+}
+.medall {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 200px;
+  }
+  
+  .cup {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-color: gold;
+    border-radius: 50%;
+    border: 5px solid #b8860b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;    
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+#askName {
+    visibility: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    width: 50vw;
+    height: 50vh;
+    background-color: #ffc900;
+    border: 5px solid black;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around; 
+    font-family: Arial, sans-serif;
+}
+
+
+#continue {
+    margin-bottom: 55px;
+    background-color: #d8a901;
+    border: 2px solid black;
+    border-radius: 25px;
+    padding: 15px 50px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+#tryAgain {
+    margin-top: 390px;
+    background-color: #d8a901;
+    border: 2px solid black;
+    border-radius: 25px;
+    padding: 15px 50px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#winscreen {
+    visibility: hidden;  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    height: 98vh;
+    background-color: #ffc900;
+    border: 5px solid black;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+#winscreen h2 {
+    margin-top: 55px;
+    font-size: 17px;
+}
+
+#winnerName{
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 19px;
+    height: 30px;
+    width: 40vw;
+    background-color: #d8a901;
+    border-radius: 25px;
 }

@@ -350,16 +350,36 @@ function checkGameEnd() {
   }
 }
 
-function gameEnd() {
-  //display win screen
-  updateHighscore();
+async function gameEnd() {
+  document.getElementById("placeholder1").innerHTML = currentPlayer;
+  document.getElementById("askName").style.visibility = "visible";
+  console.log("game end");
+  await new Promise((resolve) => {
+    let button = document.getElementById("continue");
+    button.addEventListener("click", () => {
+        resolve();
+    });
+  });
+  let name = document.getElementById("winnerName").value;
+  let winscreen = document.getElementById("winscreen");
+  document.getElementById("Winner").innerHTML = name;
+  document.getElementById("winnerScore").innerHTML = Math.max(...players.map((player) => player.score));
+  document.getElementById("winnerTime").innerHTML = stuff;
+  winscreen.style.visibility = "visible";
+  let scoreBoard = document.getElementById("scoreBoard");
+  scoreBoard.style.top = "50%";
+  scoreBoard.style.left = "50%";
+  scoreBoard.style.transform = "translate(-50%, -20%)";
+  updateHighscore(name); 
+  showScoreList();
 }
 
-function updateHighscore() {
+function updateHighscore(winnerName) {
   let maxScore = Math.max(...players.map((player) => player.score));
   let maxScoreIndex = players.map((player) => player.score).indexOf(maxScore);
   let winner = players[maxScoreIndex].players;
-  let name = prompt("Enter the name for Player " + winner + ":");
+
+  let name = winnerName;
   console.log("name:",name);
   if(name !== null) {
   if (highScore.length < 50) {
@@ -388,7 +408,7 @@ function updateHighscore() {
     }
   }
   }
-  if(players.length == 1) {
+  if(players.length === 1) {
   highScore.sort((a, b) => {
       if (a.time < b.time) {
         return -1;
@@ -415,20 +435,25 @@ function showScoreList() {
     table.classList.add("highscores-table");
     for (let i = 0; i < highScore.length && i < 10 ; i++) {
       let row = document.createElement("tr");
+      row.className = "rows";
 
       let placeCell = document.createElement("td");
+      placeCell.className = "cell";
       placeCell.appendChild(document.createTextNode(i + 1 + "."));
       row.appendChild(placeCell);
 
       let nameCell = document.createElement("td");
+      nameCell.className = "cell";
       nameCell.appendChild(document.createTextNode(highScore[i].name));
       row.appendChild(nameCell);
 
       let scoreCell = document.createElement("td");
+      scoreCell.className = "cell";
       scoreCell.appendChild(document.createTextNode(highScore[i].score));
       row.appendChild(scoreCell);
 
       let timeCell = document.createElement("td");
+      timeCell.className = "cell";
       timeCell.appendChild(document.createTextNode(highScore[i].time));
       row.appendChild(timeCell);
 
@@ -476,6 +501,18 @@ function restart() {
   document.getElementById("restart").style.display = "none";
   document.getElementById("inputbox").style.display = "flex";
   console.log("restart");
+
+  document.getElementById("askName").style.visibility = "hidden";
+  document.getElementById("winscreen").style.visibility = "hidden";
+  let scoreBoard = document.getElementById("scoreBoard");
+    while (scoreBoard.firstChild) {
+      scoreBoard.removeChild(scoreBoard.firstChild);
+    }
+    scoreVisibillity = false;
+    scoreBoard.style.top = "4.5%";
+    scoreBoard.style.left = "70%";
+    scoreBoard.style.transform = "translate(-0%, -0%)";
+    gameStart();
 }
 
 //mit js die beste größe der karten berechnen

@@ -10,7 +10,19 @@
 <body>
     <audio id="flipCard" src="./Sounds/flipCard.mp3"></audio>
     <audio id="cardDeal" src="./Sounds/cardDeal.mp3"></audio>
-    <audio id="cardMatch" src="./Sounds/cardMatch.mp3"></audio>
+    <audio id="cardMatch" src="./Sounds/cardMatch.mp3"></audio>    
+    <div id="askName">
+        <h2>Player <span id="placeholder1"></span>, please enter you´re name: </h2>
+        <input type="text" id="winnerName" placeholder="Enter Name...">
+        <button id="continue">Continue</button>
+    </div>
+    <div id="winscreen">
+        <div class="medall">
+            <div class="cup">Congrats!</div>
+        </div>
+        <h2>Congrats <span id="Winner"></span>, you´ve reached a score of <span id="winnerScore"></span>,with a time of <span id="winnerTime"></span></h2>
+        <button id="tryAgain" onclick="restart()">Try again</button>
+    </div>
     <div id="timer"></div>    
     <table id="scoreBoard"></table>
     <div id="start"></div>
