@@ -4,22 +4,21 @@ body {
 #start {
     position: absolute;
 }
-#inputbox {
-    display:flex;
-}
+
 
 #score {
     /* border: 1px solid aqua;  */
-    margin-left: 37.5%;
+    /* margin-left: 37.5%; */
     display: flex;
     justify-content: center;
     justify-content: space-around;
-    max-width: 25%;
+    /* max-width: 25%; */
     font-size: 30px;
+    font-family: Arial, sans-serif;
 }
 
 #board {
-    margin-top: 10%;
+    margin-top: 6%;
     display: flex;
     justify-content: center;
 }
@@ -29,7 +28,7 @@ body {
     width: fit-content;
     height: fit-content;
     display: grid;
-    /* border: 1px solid pink; */
+    border: 1px solid pink;
     row-gap: 20px;
     column-gap: 80px;
     justify-content: center;
@@ -39,36 +38,78 @@ body {
     background-color: rgba(83, 19, 1, 1);
     color: #fff; 
     border: none;
-    display:none;
+    /* display: none; */
     border-radius: 5px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+#restart {
+    width: 50px;
+    height: 50px;
+    background-Image: url("./Images/restart.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80% auto;
+}
 
 #mute {
-    position: absolute;
+    
+    /* position: absolute; */
     top: 4.5%;
     left: 40%;
-}
-#scoreList{
-    position:absolute;
-    top: 4.5%;
-    left: 55%;
-}
-  
-.difficulty:hover,#mute:hover, #scoreList:hover, #restart:hover {
-    background-color: #1e4dff;
+    width: 50px;
+    height: 50px;
+    background-Image: url("./Images/Speaker.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80% auto;
 }
 
-#buttons {
-    margin-left:  30%;
-    margin-right: 30%;
-    /* border: 1px solid green;  */
-    display: flex;
-    justify-content: space-around;
+#scoreList{
+    /* position:absolute; */
+    top: 4.5%;
+    left: 55%;
+    width: 50px;
+    height: 50px;
+    background-Image: url("./Images/Trophy.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80% auto;
 }
+
+#timer {
+  padding-left:  8px;
+  padding-right: 8px;
+  /* position: absolute; */
+  border: 2px solid black;
+  /* display: none; */
+  /* border: 2px solid white; */
+  max-height: 35px;
+  border-radius: 45px;
+  font-size: 30px;
+  font-family: Arial, sans-serif;
+}
+
+
+header{
+    margin-left: 50%;
+
+    /* border: 1px solid pink; */
+    display:flex;
+    width: 30%;
+    flex-direction: rows;
+    align-items: center;
+    justify-content: space-around;
+    transform: translate(-50%, -25%);
+}
+
+.difficulty:hover,#mute:hover, #scoreList:hover, #restart:hover {
+    background-color: green;
+}
+
+
   
 
 .card {
@@ -76,11 +117,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-size: contain;
+    background-repeat: no-repeat;
     font-size: 30px;
     /* border: 1px solid red; */
-    height: 50px;
-    width:  50px;
+    border-radius: 5px;
+    width:  75px;
+    height: 75px;
     transition: all 0.5s ease;
+    color:white;
 }
 .back-img {
     background-image: url(./Images/back.svg) !important;
@@ -99,41 +144,34 @@ body {
   }
 
 
-  #timer {
-    padding-left:  8px;
-    padding-right: 8px;
-    position: absolute;
-    border: 2px solid black;
-    display: none;
-    /* border: 2px solid white; */
-    border-radius: 45px;
-    font-size: 30px;
-  }
   .deleteScore {
     font-size: 30px;
   }
 
   .highscores-table {
-    width: 100%;
+    /* width: 100%; */
     border-collapse: collapse;
 }
 
 .highscores-table td {
     /* border: 1px solid red; */
-    padding: 8px;
+    padding: 8px;   
+    border: 1px solid black;
+    width: 30vw;
 }
 
 #scoreBoard {
+    position: absolute;
+    top: 4.5%;
+    left: 70%;
     z-index:3;
-    background-color: grey;
-    width: 500px;
-    /* border: 1px solid blue; */
-    left: 65%;
-    position: absolute;
+    background-color: #ffc900;
 }
-#score{
-    position: absolute;
-}
+
+
+
+
+
 .medall {
     display: flex;
     flex-direction: column;
@@ -229,3 +267,80 @@ body {
     background-color: #d8a901;
     border-radius: 25px;
 }
+
+
+
+
+#gameSetting {
+    visibility: visible;  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    transform: translate(-50%, -50%);
+    width: 50vw;
+    height: 50vh;
+    background-color: #ffc900;
+    border: 5px solid black;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    font-family: Arial, sans-serif;
+}
+#input {
+    /* margin-top: 2vw; */
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 19px;
+    height: 30px;
+    width: 40vw;
+    background-color: #d8a901;
+    color: black;
+    border-radius: 25px;
+}
+.difficulty {
+    margin-top: 10px;
+    background-image: url("./Images/Cards.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 14vw;
+    width: 10vw;
+    transition: transform 0.2s;
+}
+.difficulty:hover {
+    transform: translateY(-5px);
+  }
+#submit {
+    margin-top: 10px;
+    background-color: rgba(83, 19, 1, 1);   
+    color: #fff; 
+    border: none;
+    /* display: none; */
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom:1vw;
+}
+.selected {
+    background-color: green;
+}
+
+#buttons {
+    /* border: 1px solid green;  */
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+#score {
+    /* border: 1px solid red; */
+    margin-top: 5%;
+    display: flex;
+    width: 100%;
+  }
+  
