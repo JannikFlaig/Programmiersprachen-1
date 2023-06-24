@@ -29,6 +29,16 @@ function multiplayer() {
   }
   document.getElementById("p" + currentPlayer).style.color = "red";
   console.table(players);
+  if(players.length > 5) {
+    let items = document.getElementsByClassName('scoreItem');
+    for (let i = 0; i < items.length; i++) {
+        if (i < 5) {
+          items[i].classList.remove('visible');
+        } else {
+          items[i].classList.add('visible');
+        }
+      }
+  }
 }
 
 async function gameStart() {
@@ -198,7 +208,7 @@ function checkPair() {
       players[currentPlayer - 1].score++;
       outputScore.innerHTML =
         "Player" + currentPlayer + ":" + " " + players[currentPlayer - 1].score;
-      getDestination();
+      startAnimate();
     } else {
       console.log("no pair");
       // Karten passen nicht zusammen
@@ -211,6 +221,7 @@ function checkPair() {
           card.classList.add("back-img");
         }
       });
+      nextItems();
       // Den nächsten Spieler auswählen
       currentPlayer = (currentPlayer % players.length) + 1;
       document.getElementById("p" + currentPlayer).style.color = "red";
@@ -235,17 +246,9 @@ function sound() {
   console.log(mute);
 }
 
-function getDestination() {
-  let placeholderForVarName2 = document
-    .getElementById("p" + currentPlayer)
-    .getBoundingClientRect();
-  destination = {
-    x: placeholderForVarName2.left,
-    y: placeholderForVarName2.top,
-  };
-  startAnimate(destination);
-}
-function startAnimate(destination) {
+function startAnimate() {
+  let destination = document.getElementById("p" + currentPlayer).getBoundingClientRect();
+
   let child = document.querySelectorAll(".back");
 
   child.forEach((child) => {
@@ -254,17 +257,19 @@ function startAnimate(destination) {
       let rect = child.getBoundingClientRect();
       let moveInX = destination.x - rect.left;
       let moveInY = destination.y - rect.top;
-
+      
       child.style.cssText += `transform: translateX(${moveInX}px) translateY(${moveInY}px) scale(0.5);`;
+      
+      setTimeout(()=> {
+      child.parentNode.removeChild(child);
+      child.style.transform = '';
+      child.style.transform = "translateX(-20%) translatey(25%) scale(0.5)";
+      document.getElementById(`p${currentPlayer}`).appendChild(child);
+      child.style.position = "absolute";
+    }, 180);
     }
   });
-  // setTimeout(()=>{reset(child)}, 2000);
   checkGameEnd();
-}
-function reset(child) {
-  child.forEach((child) => {
-    child.style.transition = "0s";
-  });
 }
 
 function checkGameEnd() {
@@ -440,6 +445,30 @@ function showScoreList() {
     }
     scoreVisibillity = false;
   }
+}
+function nextItems() {
+  let container = document.getElementById('score');
+  let items = document.getElementsByClassName('scoreItem');
+  console.log(items)
+  let firstItem = items[0];
+  let itemWidth = firstItem.offsetWidth + "10px";
+  // Animationseffekt: Verschiebung nach links
+  container.style.transform = `translateX(-${itemWidth}px)`;
+
+  // Aktualisierung der Elemente in der Liste
+  setTimeout(function() {
+    container.removeChild(firstItem);
+    container.appendChild(firstItem);
+    // container.style.transform = 'translateX(0)';
+    // Aktualisierung der Sichtbarkeit der Elemente
+    for (let i = 0; i < items.length; i++) {
+      if (i < 5) {
+        items[i].classList.remove('visible');
+      } else {
+        items[i].classList.add('visible');
+      }
+    }
+  }, 0); // Wartezeit für die Animation in Millisekunden
 }
 
 function restart() {

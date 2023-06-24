@@ -336,11 +336,21 @@ header{
     justify-content: space-around;
 }
 
-
+  .scoreItem {
+    border: 2px solid black;
+    border-radius: 5px;
+    display: block;
+    position: relative;
+    height: 80px;
+  }
 #score {
     /* border: 1px solid red; */
-    margin-top: 5%;
+    margin-top: 2%;
     display: flex;
     width: 100%;
   }
   
+  .visible {
+    transition: transform 0.5s ease-in-out;
+    display: none;
+  }
