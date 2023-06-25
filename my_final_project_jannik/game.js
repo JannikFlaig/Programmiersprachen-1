@@ -1,3 +1,13 @@
+let screenwidth = window.innerWidth;
+let vissibleScoreItems = 5;
+if (screenwidth < 800 && screenwidth > 400) {
+  vissibleScoreItems = 4;
+  console.log("< 800");
+} else if (screenwidth < 400) {
+  vissibleScoreItems = 3;
+  console.log("< 400");
+}
+
 let clickCounter = 0;
 let CardData = [];
 let highScoreS1 = [{ name: "S1", score: 0, time: "00:00" }];
@@ -9,7 +19,7 @@ let highScoreM2 = [{ name: "M2", score: 0, time: "00:00" }];
 let highScoreM3 = [{ name: "M3", score: 0, time: "00:00" }];
 let highScoreM4 = [{ name: "M4", score: 0, time: "00:00" }];
 let dataSet = [];
-let mute = false;
+let mute = true;
 //multiplayer-mode
 let players = [];
 let currentPlayer = 1;
@@ -18,6 +28,8 @@ let startTime,
   endTime = 0;
 
 let amountPlayer;
+
+let mediaKey = 1;
 
 function multiplayer() {
   for (let i = 1; i <= amountPlayer; i++) {
@@ -36,10 +48,10 @@ function multiplayer() {
   }
   document.getElementById("p" + currentPlayer).style.color = "red";
   console.table(players);
-  if (players.length > 5) {
+  if (players.length > vissibleScoreItems) {
     let items = document.getElementsByClassName("scoreItem");
     for (let i = 0; i < items.length; i++) {
-      if (i < 5) {
+      if (i < vissibleScoreItems) {
         items[i].classList.remove("visible");
       } else {
         items[i].classList.add("visible");
@@ -56,8 +68,7 @@ async function gameStart() {
   }
   document.getElementById("gameSetting").style.visibility = "visible";
   console.log("game start");
-  // klicke auf eine Anzahl an Karten & wähle aus wie viele SpeechRecognitionAlternative. dann drücke auf submit
-  let amountOfCards;
+
   const buttons = document.querySelectorAll(".difficulty");
   buttons.forEach((buttons) => {
     buttons.addEventListener("click", (event) => {
@@ -67,9 +78,20 @@ async function gameStart() {
       }
       amountOfCards = event.target.id;
       event.target.classList.add("selected");
-      document.getElementById(
-        "mainBoard"
-      ).style.gridTemplateColumns = `repeat(${amountOfCards / 5}, 20px)`;
+
+      if (amountOfCards == 30) {
+        document.getElementById("mainBoard").style.maxWidth = "570px";
+        mediaKey = 1;
+      } else if (amountOfCards == 40) {
+        document.getElementById("mainBoard").style.maxWidth = "730px";
+        mediaKey = 2;
+      } else if (amountOfCards == 50) {
+        document.getElementById("mainBoard").style.maxWidth = "900px";
+        mediaKey = 3;
+      } else if (amountOfCards == 70) {
+        document.getElementById("mainBoard").style.maxWidth = "1200px";
+        mediaKey = 4;
+      }
     });
   });
 
@@ -108,13 +130,21 @@ function createCards(amountOfCards) {
   shuffleData(dataSet);
   console.table(dataSet);
   if (mute === false) {
-    document.getElementById("cardDeal").play();
+    if (dataSet.length === 30) {
+      document.getElementById("cardDeal1").play();
+    } else if (dataSet.length === 40) {
+      document.getElementById("cardDeal2").play();
+    } else if (dataSet.length === 50) {
+      document.getElementById("cardDeal3").play();
+    } else if (dataSet.length === 70) {
+      document.getElementById("cardDeal4").play();
+    }
   }
   for (let i = 0; i < amountOfCards; i++) {
     setTimeout(() => {
       //creating the correct amount of playing cards, based on the entered difficulty(amountOfCards)
       cardsParent = document.createElement("div");
-      cardsParent.classList.add("card");
+      cardsParent.classList.add(`card-parent${mediaKey}`);
       cardsParent.id = "parent" + dataSet[i].parentID;
 
       card = document.createElement("div");
@@ -123,7 +153,7 @@ function createCards(amountOfCards) {
 
       card.style.backgroundImage = `url(./Images/${dataSet[i].data}.svg)`;
 
-      card.classList.add("card");
+      card.classList.add(`card${mediaKey}`);
       card.classList.add("back-img");
       text = document.createTextNode(dataSet[i].text);
 
@@ -159,6 +189,9 @@ function createCards(amountOfCards) {
       }
     }, 60 * i); //speed for the animation
   }
+  // setTimeout( () => {
+  //   document.getElementById("mainBoard").style.justifyContent = "center";
+  // },5000);
 }
 
 function shuffleData(arr) {
@@ -313,7 +346,6 @@ function endTimer() {
 }
 
 function updateTimer() {
-  document.getElementById("timer").style.display = "block";
   let currentTime = Date.now();
   let semiFinalTime = currentTime - startTime;
   let minutes = Math.floor(semiFinalTime / 60000);
@@ -348,7 +380,7 @@ async function gameEnd() {
   let scoreBoard = document.getElementById("scoreBoard");
   scoreBoard.style.top = "50%";
   scoreBoard.style.left = "50%";
-  scoreBoard.style.transform = "translate(-50%, -20%)";
+  scoreBoard.style.transform = "translate(-50%, -50%)";
   updateHighscore(name);
   showScoreList();
 }
@@ -529,7 +561,7 @@ function nextItems() {
     // container.style.transform = 'translateX(0)';
     // Aktualisierung der Sichtbarkeit der Elemente
     for (let i = 0; i < items.length; i++) {
-      if (i < 5) {
+      if (i < vissibleScoreItems) {
         items[i].classList.remove("visible");
       } else {
         items[i].classList.add("visible");
@@ -537,6 +569,27 @@ function nextItems() {
     }
   }, 0); // Wartezeit für die Animation in Millisekunden
 }
+
+window.addEventListener("resize", () => {
+  screenwidth = window.innerWidth;
+  if (screenwidth < 800 && screenwidth > 400) {
+    vissibleScoreItems = 4;
+    console.log("< 800");
+  } else if (screenwidth < 400) {
+    vissibleScoreItems = 3;
+    console.log("< 400");
+  } else {
+    vissibleScoreItems = 5;
+  }
+  let items = document.getElementsByClassName("scoreItem");
+  for (let i = 0; i < items.length; i++) {
+    if (i < vissibleScoreItems) {
+      items[i].classList.remove("visible");
+    } else {
+      items[i].classList.add("visible");
+    }
+  }
+});
 
 function restart() {
   //reset all global variables/arrays
@@ -547,7 +600,9 @@ function restart() {
   currentPlayer = 1;
   console.table(dataSet);
   //deleting all cards and the scores
-  let cards = document.querySelectorAll(".card");
+  let cards = document.querySelectorAll(
+    `.card${mediaKey},.card-parent${mediaKey}`
+  );
   cards.forEach(function (card) {
     card.parentNode.removeChild(card);
   });
@@ -577,6 +632,3 @@ function restart() {
   scoreBoard.style.transform = "translate(-0%, -0%)";
   gameStart();
 }
-
-//mit js die beste größe der karten berechnen
-//für grid: Am anfang eine maximalbreite für das Game-board festlegen
