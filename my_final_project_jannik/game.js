@@ -10,16 +10,16 @@ if (screenwidth < 800 && screenwidth > 400) {
 
 let clickCounter = 0;
 let CardData = [];
-let highScoreS1 = [{ name: "S1", score: 0, time: "00:00" }];
-let highScoreS2 = [{ name: "S2", score: 0, time: "00:00" }];
-let highScoreS3 = [{ name: "S3", score: 0, time: "00:00" }];
-let highScoreS4 = [{ name: "S4", score: 0, time: "00:00" }];
-let highScoreM1 = [{ name: "M1", score: 0, time: "00:00" }];
-let highScoreM2 = [{ name: "M2", score: 0, time: "00:00" }];
-let highScoreM3 = [{ name: "M3", score: 0, time: "00:00" }];
-let highScoreM4 = [{ name: "M4", score: 0, time: "00:00" }];
+let highScoreS1 = [];
+let highScoreS2 = [];
+let highScoreS3 = [];
+let highScoreS4 = [];
+let highScoreM1 = [];
+let highScoreM2 = [];
+let highScoreM3 = [];
+let highScoreM4 = [];
 let dataSet = [];
-let mute = true;
+let mute = false;
 //multiplayer-mode
 let players = [];
 let currentPlayer = 1;
