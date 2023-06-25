@@ -1,35 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="Frosch.png" sizes="255x198" />
     <link rel="stylesheet" href="game.css">
     <script src="game.js"></script>
     <title>Memory</title>
 </head>
-<body>
-    <div id="start"></div>
-    <div id="inputbox">  
-        <input type="number" id="input" placeholder="Player">
-        <button id="submit" onclick="submitPLayer()">Submit!</button>
-    </div> 
-
-    <div id="buttons"> 
-        <button class="difficulty" id="30" onclick="checkDifficulty(event)">15 pairs</button>
-        <button class="difficulty" id="40" onclick="checkDifficulty(event)">20 pairs</button>
-        <button class="difficulty" id="50" onclick="checkDifficulty(event)">25 pairs</button>
-        <button class="difficulty" id="70" onclick="checkDifficulty(event)">35 pairs</button>
+<body onload="gameStart()">
+    <audio id="flipCard" src="./Sounds/flipCard.mp3"></audio>
+    <audio id="cardDeal1" src="./Sounds/cardDeal15.mp3"></audio>
+    <audio id="cardDeal2" src="./Sounds/cardDeal20.mp3"></audio>
+    <audio id="cardDeal3" src="./Sounds/cardDeal25.mp3"></audio>
+    <audio id="cardDeal4" src="./Sounds/cardDeal35.mp3"></audio>
+    <audio id="cardMatch" src="./Sounds/cardMatch.mp3"></audio>
+    <div id="askName">
+        <h2>Player <span id="placeholder1"></span>,<br> please enter you´re name: </h2>
+        <input type="text" id="winnerName" placeholder="Enter Name...">
+        <button id="continue">Continue</button>
+    </div>
+    <div id="winscreen">
+        <div class="medall">
+            <div class="cup">Congrats!</div>
+        </div>
+        <h2>Congrats <span id="Winner"></span>,<br> you´ve reached a score of <span id="winnerScore"></span>,with a time of <span id="winnerTime"></span></h2>
+        <button id="tryAgain" onclick="restart()">Try again</button>
     </div>
     
+    <header>
+        <div id="headerButtons">
+            <div class="headerButton">
+                <button id="restart" onclick="restart()"></button>
+            </div>
+            <div class="headerButton">
+                <button id="scoreList" onclick="showScoreList()"></button>
+            </div>
+            <div class="headerButton">
+                <button id="mute" onclick="sound()"></button>
+            </div>
+        </div>
+        <div id="timer"></div>
+    </header>
+
+    
+    <div id="gameSetting">
+        <h2>Game Settings</h2>
+        <input type="number" id="input" placeholder="Number of Player...">
+        <div id="buttons"> 
+            <div id="btnrow1">
+            <button style="background-image: url(./Images/Cards15.svg);" class="difficulty" id="30"></button>
+            <button style="background-image: url(./Images/Cards20.svg);" class="difficulty" id="40"></button>
+            </div>
+            <div id="btnrow2">    
+            <button style="background-image: url(./Images/Cards25.svg);" class="difficulty" id="50"></button>
+            <button style="background-image: url(./Images/Cards35.svg);" class="difficulty" id="70"></button>
+            </div>
+            <!-- <button class="difficulty" id="10" >dev</button> -->
+        </div>
+        <button id="submit">Continue</button> 
+    </div>
     <div id="score"></div>
-
-
+    
+    
+    <table id="scoreBoard"></table>
+    <div id="start"></div>
     <div id="board">
         <div id="mainBoard"></div>
     </div>
-
-    <button id="restart" onclick="restart()">restart
-    <!-- button first invisible/ fixed position -->
-    </button>
-    <div id="timer"></div>
+    </body>
 </body>
 </html>
