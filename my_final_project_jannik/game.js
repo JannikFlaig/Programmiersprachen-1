@@ -1,6 +1,13 @@
 let clickCounter = 0;
 let CardData = [];
-let highScore = [{ name: "Jannik", score: 2, time: "00:56" }];
+let highScoreS1 = [{ name: "S1", score: 0, time: "00:00" }];
+let highScoreS2 = [{ name: "S2", score: 0, time: "00:00" }];
+let highScoreS3 = [{ name: "S3", score: 0, time: "00:00" }];
+let highScoreS4 = [{ name: "S4", score: 0, time: "00:00" }];
+let highScoreM1 = [{ name: "M1", score: 0, time: "00:00" }];
+let highScoreM2 = [{ name: "M2", score: 0, time: "00:00" }];
+let highScoreM3 = [{ name: "M3", score: 0, time: "00:00" }];
+let highScoreM4 = [{ name: "M4", score: 0, time: "00:00" }];
 let dataSet = [];
 let mute = false;
 //multiplayer-mode
@@ -29,15 +36,15 @@ function multiplayer() {
   }
   document.getElementById("p" + currentPlayer).style.color = "red";
   console.table(players);
-  if(players.length > 5) {
-    let items = document.getElementsByClassName('scoreItem');
+  if (players.length > 5) {
+    let items = document.getElementsByClassName("scoreItem");
     for (let i = 0; i < items.length; i++) {
-        if (i < 5) {
-          items[i].classList.remove('visible');
-        } else {
-          items[i].classList.add('visible');
-        }
+      if (i < 5) {
+        items[i].classList.remove("visible");
+      } else {
+        items[i].classList.add("visible");
       }
+    }
   }
 }
 
@@ -120,9 +127,9 @@ function createCards(amountOfCards) {
       card.classList.add("back-img");
       text = document.createTextNode(dataSet[i].text);
 
-      if (amountOfCards == 10) {
-        card.appendChild(text);
-      }
+      // if(amountOfCards == 10) {
+      card.appendChild(text);
+      // }
 
       card.addEventListener("click", function () {
         cardClicked(event);
@@ -214,7 +221,6 @@ function checkPair() {
       // Karten passen nicht zusammen
       outputScore.style.color = "black";
       let turnedCard = document.querySelectorAll(".back");
-
       turnedCard.forEach(function (card) {
         if (!card.classList.contains("solved")) {
           card.classList.remove("back");
@@ -247,7 +253,9 @@ function sound() {
 }
 
 function startAnimate() {
-  let destination = document.getElementById("p" + currentPlayer).getBoundingClientRect();
+  let destination = document
+    .getElementById("p" + currentPlayer)
+    .getBoundingClientRect();
 
   let child = document.querySelectorAll(".back");
 
@@ -257,16 +265,16 @@ function startAnimate() {
       let rect = child.getBoundingClientRect();
       let moveInX = destination.x - rect.left;
       let moveInY = destination.y - rect.top;
-      
+
       child.style.cssText += `transform: translateX(${moveInX}px) translateY(${moveInY}px) scale(0.5);`;
-      
-      setTimeout(()=> {
-      child.parentNode.removeChild(child);
-      child.style.transform = '';
-      child.style.transform = "translateX(-20%) translatey(25%) scale(0.5)";
-      document.getElementById(`p${currentPlayer}`).appendChild(child);
-      child.style.position = "absolute";
-    }, 180);
+
+      setTimeout(() => {
+        child.parentNode.removeChild(child);
+        child.style.transform = "";
+        child.style.transform = "translateX(-20%) translatey(25%) scale(0.5)";
+        document.getElementById(`p${currentPlayer}`).appendChild(child);
+        child.style.position = "absolute";
+      }, 180);
     }
   });
   checkGameEnd();
@@ -319,11 +327,6 @@ function pad(num) {
   return num.toString().padStart(2, "0");
 }
 
-//winscreen-plan:
-//1. ask for the name
-//2. current winscreen without name
-function getName() {}
-
 async function gameEnd() {
   document.getElementById("placeholder1").innerHTML = currentPlayer;
   document.getElementById("askName").style.visibility = "visible";
@@ -350,33 +353,36 @@ async function gameEnd() {
   showScoreList();
 }
 
+let selectedArray = selectArray();
 function updateHighscore(winnerName) {
   let maxScore = Math.max(...players.map((player) => player.score));
   let maxScoreIndex = players.map((player) => player.score).indexOf(maxScore);
   let winner = players[maxScoreIndex].players;
 
+  selectedArray = selectArray();
+
   let name = winnerName;
   console.log("name:", name);
   if (name !== null) {
-    if (highScore.length < 50) {
-      highScore.push({
+    if (selectedArray.length < 50) {
+      selectedArray.push({
         name: name,
         score: maxScore,
         time: stuff,
       });
     } else {
       let lowestScoreIndex = 0;
-      let lowestScore = highScore[0].score;
+      let lowestScore = selectedArray[0].score;
 
-      for (let i = 0; i < highScore.lenggth; i++) {
+      for (let i = 0; i < selectedArray.lenggth; i++) {
         // Compare if the current value is less than the previous value.
-        if (highScore[i].score < lowestScore) {
+        if (selectedArray[i].score < lowestScore) {
           lowestScoreIndex = i;
-          lowestScore = highScore[i].score;
+          lowestScore = selectedArray[i].score;
         }
       }
       if (maxScore > lowestScore) {
-        highScore[lowestScoreIndex] = {
+        selectedArray[lowestScoreIndex] = {
           name: name,
           score: maxScore,
           time: stuff,
@@ -385,7 +391,7 @@ function updateHighscore(winnerName) {
     }
   }
   if (players.length === 1) {
-    highScore.sort((a, b) => {
+    selectedArray.sort((a, b) => {
       if (a.time < b.time) {
         return -1;
       } else if (a.time > b.time) {
@@ -395,21 +401,48 @@ function updateHighscore(winnerName) {
       }
     });
   } else {
-    highScore.sort((a, b) => {
+    selectedArray.sort((a, b) => {
       return b.score - a.score;
     });
   }
-  console.table(highScore);
 }
 
 //Vielleicht das der Spieler aussuchen kann auf welches board er möchte idk
 
 let scoreVisibillity = false;
 function showScoreList() {
+  selectedArray = selectArray();
+
   if (scoreVisibillity === false) {
     let table = document.createElement("table");
     table.classList.add("highscores-table");
-    for (let i = 0; i < highScore.length && i < 10; i++) {
+
+    let headerRow = document.createElement("tr");
+    headerRow.className = "header-row";
+
+    let placeHeader = document.createElement("th");
+    placeHeader.className = "header-cell";
+    placeHeader.appendChild(document.createTextNode("Place"));
+    headerRow.appendChild(placeHeader);
+
+    let nameHeader = document.createElement("th");
+    nameHeader.className = "header-cell";
+    nameHeader.appendChild(document.createTextNode("Name"));
+    headerRow.appendChild(nameHeader);
+
+    let scoreHeader = document.createElement("th");
+    scoreHeader.className = "header-cell";
+    scoreHeader.appendChild(document.createTextNode("Score"));
+    headerRow.appendChild(scoreHeader);
+
+    let timeHeader = document.createElement("th");
+    timeHeader.className = "header-cell";
+    timeHeader.appendChild(document.createTextNode("Time"));
+    headerRow.appendChild(timeHeader);
+
+    table.appendChild(headerRow);
+
+    for (let i = 0; i < selectedArray.length && i < 10; i++) {
       let row = document.createElement("tr");
       row.className = "rows";
 
@@ -420,17 +453,17 @@ function showScoreList() {
 
       let nameCell = document.createElement("td");
       nameCell.className = "cell";
-      nameCell.appendChild(document.createTextNode(highScore[i].name));
+      nameCell.appendChild(document.createTextNode(selectedArray[i].name));
       row.appendChild(nameCell);
 
       let scoreCell = document.createElement("td");
       scoreCell.className = "cell";
-      scoreCell.appendChild(document.createTextNode(highScore[i].score));
+      scoreCell.appendChild(document.createTextNode(selectedArray[i].score));
       row.appendChild(scoreCell);
 
       let timeCell = document.createElement("td");
       timeCell.className = "cell";
-      timeCell.appendChild(document.createTextNode(highScore[i].time));
+      timeCell.appendChild(document.createTextNode(selectedArray[i].time));
       row.appendChild(timeCell);
 
       table.appendChild(row);
@@ -446,26 +479,60 @@ function showScoreList() {
     scoreVisibillity = false;
   }
 }
+
+function selectArray() {
+  let scoreAtribute1, scoreAtribute2;
+  if (players.length > 1) {
+    scoreAtribute1 = "M";
+  } else {
+    scoreAtribute1 = "S";
+  }
+  if (dataSet.length === 30) {
+    scoreAtribute2 = 1;
+  } else if (dataSet.length === 40) {
+    scoreAtribute2 = 2;
+  } else if (dataSet.length === 50) {
+    scoreAtribute2 = 3;
+  } else if (dataSet.length === 70) {
+    scoreAtribute2 = 4;
+  } else {
+    scoreAtribute2 = 1;
+  }
+  const arrays = {
+    S1: highScoreS1,
+    S2: highScoreS2,
+    S3: highScoreS3,
+    S4: highScoreS4,
+    M1: highScoreM1,
+    M2: highScoreM2,
+    M3: highScoreM3,
+    M4: highScoreM4,
+  };
+
+  const key = `${scoreAtribute1}${scoreAtribute2}`;
+  return arrays[key];
+}
+
 function nextItems() {
-  let container = document.getElementById('score');
-  let items = document.getElementsByClassName('scoreItem');
-  console.log(items)
+  let container = document.getElementById("score");
+  let items = document.getElementsByClassName("scoreItem");
+  console.log(items);
   let firstItem = items[0];
   let itemWidth = firstItem.offsetWidth + "10px";
   // Animationseffekt: Verschiebung nach links
   container.style.transform = `translateX(-${itemWidth}px)`;
 
   // Aktualisierung der Elemente in der Liste
-  setTimeout(function() {
+  setTimeout(function () {
     container.removeChild(firstItem);
     container.appendChild(firstItem);
     // container.style.transform = 'translateX(0)';
     // Aktualisierung der Sichtbarkeit der Elemente
     for (let i = 0; i < items.length; i++) {
       if (i < 5) {
-        items[i].classList.remove('visible');
+        items[i].classList.remove("visible");
       } else {
-        items[i].classList.add('visible');
+        items[i].classList.add("visible");
       }
     }
   }, 0); // Wartezeit für die Animation in Millisekunden

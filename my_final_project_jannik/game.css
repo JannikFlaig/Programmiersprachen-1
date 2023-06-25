@@ -18,7 +18,7 @@ body {
 }
 
 #board {
-    margin-top: 6%;
+    margin-top: 4%;
     display: flex;
     justify-content: center;
 }
@@ -28,7 +28,7 @@ body {
     width: fit-content;
     height: fit-content;
     display: grid;
-    border: 1px solid pink;
+    /* border: 1px solid pink; */
     row-gap: 20px;
     column-gap: 80px;
     justify-content: center;
@@ -153,12 +153,18 @@ header{
     border-collapse: collapse;
 }
 
-.highscores-table td {
+.cell {
     /* border: 1px solid red; */
     padding: 8px;   
-    border: 1px solid black;
+    border: 1px inset black;
     width: 30vw;
 }
+.header-cell {
+    border-left: 1px; 
+    text-align: left;
+    /* border: 1px solid red;    */
+}
+  
 
 #scoreBoard {
     position: absolute;
@@ -169,8 +175,18 @@ header{
 }
 
 
-
-
+  .scoreItem {
+    border: 2px solid black;
+    border-radius: 5px;
+    display: block;
+    position: relative;
+    /* width: 100px; */
+    height: 80px;
+    /* margin-right: 10px; */
+    /* transition: transform 0.5s ease-in-out; */
+    /* opacity: 1;  */
+    /* Startzustand: Elemente sind nicht sichtbar */
+  }
 
 .medall {
     display: flex;
@@ -336,13 +352,7 @@ header{
     justify-content: space-around;
 }
 
-  .scoreItem {
-    border: 2px solid black;
-    border-radius: 5px;
-    display: block;
-    position: relative;
-    height: 80px;
-  }
+
 #score {
     /* border: 1px solid red; */
     margin-top: 2%;
@@ -350,7 +360,11 @@ header{
     width: 100%;
   }
   
+
+  
   .visible {
     transition: transform 0.5s ease-in-out;
     display: none;
+    /* opacity: 0; */
+     /* Sichtbare Elemente haben volle Opazität */
   }
